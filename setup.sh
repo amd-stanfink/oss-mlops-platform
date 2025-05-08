@@ -26,7 +26,6 @@ else
 fi
 done
 
-HOST_IP=0.0.0.0
 echo Cluster name set to: "$CLUSTER_NAME"
 echo Host IP set to: "$HOST_IP"
 echo Run tests after installation set to: "$RUN_TESTS"

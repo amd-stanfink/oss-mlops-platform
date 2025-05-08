@@ -17,9 +17,8 @@ echo Host IP set to: "$HOST_IP"
 file=$PLATFORM_CONFIG
 key="DEPLOYMENT_OPTION"
 
-# Ensure the file exists
 if [ ! -f "$file" ]; then
-    echo "File '$file' not found!"
+    echo "Configuration file '$file' is not found!"
     exit 1
 fi
 
@@ -38,18 +37,10 @@ fi
 if kind get clusters | grep -q "^$CLUSTER_NAME$"; then
   echo
   echo "Kind cluster with name \"$CLUSTER_NAME\" already exists. It can be deleted with the following command: kind delete cluster --name $CLUSTER_NAME"
-  while true; do
-    read -p "Do you want to continue the installation on the existing cluster? (y/n): " choice
-    case "$choice" in
-        y|Y ) echo "Using existing kind cluster..."; break;;
-        n|N ) exit 0 ;;
-        * ) echo "Invalid response. Please enter y or n." ;;
-        "" ) echo "Please enter a response." ;;
-    esac
-  done
+  echo "Using existing kind cluster..."
 else
-    echo "Creating kind cluster..."
-    /bin/bash "$SCRIPT_DIR/scripts/create_cluster.sh"
+    echo "\"$CLUSTER_NAME\" does not exist"
+    exit 1
 fi
 
 kubectl cluster-info --context kind-$CLUSTER_NAME
@@ -89,7 +80,7 @@ while true; do
 done
 
 echo
-echo "Installation completed!"
+echo "Update completed!"
 echo
 
 exit 0
