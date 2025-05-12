@@ -51,6 +51,10 @@ kubectl config use-context kind-$CLUSTER_NAME
 # Build the kustomization and store the output in the temporary file
 tmp_file=$(mktemp)
 DEPLOYMENT_ROOT="$SCRIPT_DIR/deployment/envs/$DEPLOYMENT_OPTION"
+
+RENDER_GID=$(getent group render | cut -d: -f3)
+kubectl create configmap render-gid-config --from-literal=render-gid="$RENDER_GID" -n kubeflow --dry-run=client -o yaml | kubectl apply -f -
+
 echo "Deployment root set to: $DEPLOYMENT_ROOT"
 echo
 echo "Building manifests..."
