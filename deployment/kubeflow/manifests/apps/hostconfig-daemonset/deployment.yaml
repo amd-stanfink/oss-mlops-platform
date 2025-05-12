@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: hostconfig
+  namespace: kubeflow
+spec:
+  selector:
+    matchLabels:
+      app: hostconfig
+  template:
+    metadata:
+      labels:
+        app: hostconfig
+    spec:
+      serviceAccountName: hostconfig-sa
+      containers:
+      - name: groupsfetcher
+        image: bitnami/kubectl:latest
+        command:
+        - /bin/sh
+        - -c
+        - |
+          while true; do
+            echo "Content of mounted file:"
+            cat /host-groups
+            echo "---"
+            HOSTNAME=$(hostname)
+            CONTENT=$(cat /host-groups)
+            kubectl create configmap host-groups-$HOSTNAME --from-literal=host-groups="$CONTENT" -n kubeflow --dry-run=client -o yaml | kubectl apply -f -
+            sleep 300
+          done
+        volumeMounts:
+        - name: host-groups
+          mountPath: /host-groups
+          readOnly: true
+      volumes:
+      - name: host-groups
+        hostPath:
+          path: /etc/group
+          type: File
+      tolerations:
+      - operator: Exists
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: hostconfig-sa
+  namespace: kubeflow
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: configmap-creator
+  namespace: kubeflow
+rules:
+- apiGroups: [""]
+  resources: ["configmaps"]
+  verbs: ["create", "update", "patch", "get", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: configmap-creator-binding
+  namespace: kubeflow
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: configmap-creator
+subjects:
+- kind: ServiceAccount
+  name: hostconfig-sa
+  namespace: kubeflow
