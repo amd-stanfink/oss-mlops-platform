@@ -8,7 +8,7 @@ spec:
     spec:
       containers:
       - name: jupyter-web-app
-        image: stfiamco/jupyter-web-app:1b2671a1
+        image: stfiamco/jupyter-web-app:e15ba260
         ports:
         - containerPort: 5000
         volumeMounts:
