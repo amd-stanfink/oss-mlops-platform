@@ -8,7 +8,7 @@ spec:
     spec:
       containers:
       - name: jupyter-web-app
-        image: docker.io/kubeflownotebookswg/jupyter-web-app
+        image: stfiamco/jupyter-web-app:bf1ebcb7
         ports:
         - containerPort: 5000
         volumeMounts:

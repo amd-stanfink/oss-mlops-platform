@@ -46,6 +46,8 @@ spawnerFormDefaults:
     - kubeflownotebookswg/jupyter-pytorch-cuda-full:v1.8.0-rc.0
     - kubeflownotebookswg/jupyter-tensorflow-full:v1.8.0-rc.0
     - kubeflownotebookswg/jupyter-tensorflow-cuda-full:v1.8.0-rc.0
+    - stfiamco/kubeflow-rocm:0.0.1
+    - stfiamco/kubeflow-rocm-pytorch:0.0.1
 
   ################################################################
   # VSCode-like Container Images (Group 1)
@@ -129,12 +131,13 @@ spawnerFormDefaults:
       # the list of available vendors in the dropdown
       #  `limitsKey` - what will be set as the actual limit
       #  `uiName` - what will be displayed in the dropdown UI
-      vendors: []
-      #vendors:
-      #  - limitsKey: "nvidia.com/gpu"
-      #    uiName: "NVIDIA"
-      #  - limitsKey: "amd.com/gpu"
-      #    uiName: "AMD"
+      vendors:
+        - limitsKey: "nvidia.com/gpu"
+          uiName: "NVIDIA"
+        # for AMD GPU a device owner group should be set to video on the host
+        # sudo chgrp video /dev/dri/renderD*
+        - limitsKey: "amd.com/gpu"
+          uiName: "AMD"
 
       # the default value of the limit
       # (possible values: "none", "1", "2", "4", "8")
