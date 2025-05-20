@@ -8,7 +8,7 @@ spec:
     spec:
       containers:
       - name: jupyter-web-app
-        image: stfiamco/jupyter-web-app:e15ba260
+        image: stfiamco/jupyter-web-app:bf1ebcb7
         ports:
         - containerPort: 5000
         volumeMounts:
@@ -27,12 +27,6 @@ spec:
           value: $(JWA_USERID_PREFIX)
         - name: APP_SECURE_COOKIES
           value: $(JWA_APP_SECURE_COOKIES)
-        - name: RENDER_GID
-          valueFrom:
-            configMapKeyRef:
-              name: render-gid-config
-              key: render-gid
-              optional: true
       serviceAccountName: service-account
       volumes:
       - configMap:
