@@ -46,8 +46,8 @@ spawnerFormDefaults:
     - kubeflownotebookswg/jupyter-pytorch-cuda-full:v1.8.0-rc.0
     - kubeflownotebookswg/jupyter-tensorflow-full:v1.8.0-rc.0
     - kubeflownotebookswg/jupyter-tensorflow-cuda-full:v1.8.0-rc.0
-    - stfiamco/kubeflow-rocm:0.0.1
-    - stfiamco/kubeflow-rocm-pytorch:0.0.1
+    - stfiamco/kubeflow-rocm:0.0.3
+    - stfiamco/kubeflow-rocm-pytorch:0.0.3
 
   ################################################################
   # VSCode-like Container Images (Group 1)
