@@ -52,6 +52,8 @@ spawnerFormDefaults:
     - stfiamco/jupyter-rocm:0.0.6
     - stfiamco/jupyter-pytorch-rocm:0.0.7
     - stfiamco/jupyter-rocm:0.0.7
+    - stfiamco/jupyter-pytorch-rocm:0.0.8
+    - stfiamco/jupyter-rocm:0.0.8
 
   ################################################################
   # VSCode-like Container Images (Group 1)
